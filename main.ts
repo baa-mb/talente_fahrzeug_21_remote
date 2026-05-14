@@ -4,8 +4,13 @@ let alt_gerade = -99
 let alt_kurve = -99
 radio.setGroup(26)
 basic.showString("U26")
-// basic.showArrow(ArrowNames.South)
-basic.showString("<-")
+basic.showLeds(`
+    . . # . .
+    . # . . .
+    # . # # #
+    . # . . .
+    . . # . .
+    `)
 let empfind = 4
 basic.forever(function () {
     gerade = Math.min(Math.max(input.rotation(Rotation.Pitch), -45), 45)
@@ -20,12 +25,12 @@ basic.forever(function () {
     // basic.showArrow(ArrowNames.East)
     // basic.pause(100)
     kurve = Math.min(Math.max(input.rotation(Rotation.Roll), -45), 45)
-    kurve = Math.round(kurve / empfind) * empfind
+    kurve = Math.round(kurve / empfind * 2) * empfind * 2
     if (gerade != alt_gerade || kurve != alt_kurve) {
         radio.sendValue("gerade", gerade)
-        radio.sendValue("kurve", kurve)
+        radio.sendValue("kurve", kurve / 3)
         alt_gerade = gerade
         alt_kurve = kurve
-        basic.pause(100)
+        // basic.pause(100)
     }
 })
